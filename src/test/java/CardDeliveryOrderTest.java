@@ -2,31 +2,34 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardDeliveryOrderTest {
-    private String generateFutureDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.DATE, 3);
-        Date futureDate = calendar.getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        return dateFormat.format(futureDate);
+    String planningDate = generateDate(3);
+    public String generateDate(int days) {
+
+        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
+//    private String generateFutureDate() {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(new Date());
+//        calendar.add(Calendar.DATE, 3);
+//        Date futureDate = calendar.getTime();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+//        return dateFormat.format(futureDate);
+//    }
 
     @BeforeEach
     public void setUp() {
         open("http://localhost:9999");
-        String futureDate = generateFutureDate();
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id=date] input").setValue(futureDate);
+        $("[data-test-id=date] input").setValue(planningDate);
     }
 
     @AfterEach
@@ -45,7 +48,7 @@ public class CardDeliveryOrderTest {
         $x("//*[@class='button__content']").click();
         // Check if the form's success notification is visible
         $("[data-test-id=notification]").waitUntil(visible, 15000);
-        $("[data-test-id=notification]").shouldHave(text("Успешно! Встреча успешно забронирована на " + generateFutureDate()));
+        $("[data-test-id=notification]").shouldHave(text("Успешно! Встреча успешно забронирована на " + planningDate));
     }
 
     @Test
@@ -56,7 +59,7 @@ public class CardDeliveryOrderTest {
         $("[data-test-id=agreement] span").click();
         $x("//*[@class='button__content']").click();
         $("[data-test-id=notification]").waitUntil(visible, 15000);
-        $("[data-test-id=notification]").shouldHave(text("Успешно! Встреча успешно забронирована на " + generateFutureDate()));
+        $("[data-test-id=notification]").shouldHave(text("Успешно! Встреча успешно забронирована на " + planningDate));
     }
 
     @Test
@@ -67,7 +70,7 @@ public class CardDeliveryOrderTest {
         $("[data-test-id=agreement] span").click();
         $x("//*[@class='button__content']").click();
         $("[data-test-id=notification]").waitUntil(visible, 15000);
-        $("[data-test-id=notification]").shouldHave(text("Успешно! Встреча успешно забронирована на " + generateFutureDate()));
+        $("[data-test-id=notification]").shouldHave(text("Успешно! Встреча успешно забронирована на " + planningDate));
     }
 
     @Test
@@ -78,7 +81,7 @@ public class CardDeliveryOrderTest {
         $("[data-test-id=agreement] span").click();
         $x("//*[@class='button__content']").click();
         $("[data-test-id=notification]").waitUntil(visible, 15000);
-        $("[data-test-id=notification]").shouldHave(text("Успешно! Встреча успешно забронирована на " + generateFutureDate()));
+        $("[data-test-id=notification]").shouldHave(text("Успешно! Встреча успешно забронирована на " + planningDate));
     }
 
     @Test
@@ -100,7 +103,7 @@ public class CardDeliveryOrderTest {
         $("[data-test-id=agreement] span").click();
         $x("//*[@class='button__content']").click();
         $("[data-test-id=notification]").waitUntil(visible, 15000);
-        $("[data-test-id=notification]").shouldHave(text("Успешно! Встреча успешно забронирована на " + generateFutureDate()));
+        $("[data-test-id=notification]").shouldHave(text("Успешно! Встреча успешно забронирована на " + planningDate));
     }
 
     @Test
