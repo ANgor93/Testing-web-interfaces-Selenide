@@ -2,6 +2,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -12,18 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardDeliveryOrderTest {
     String planningDate = generateDate(3);
+
     public String generateDate(int days) {
 
         return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
-//    private String generateFutureDate() {
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(new Date());
-//        calendar.add(Calendar.DATE, 3);
-//        Date futureDate = calendar.getTime();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-//        return dateFormat.format(futureDate);
-//    }
+
 
     @BeforeEach
     public void setUp() {
